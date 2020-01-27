@@ -1,0 +1,21 @@
+@import './variables.scss';
+
+.app {
+  height: 100vh;
+}
+
+body {
+  background-color: $twitch-black;
+  font-family: $font-stack;
+  color: $twitch-ice;
+  overscroll-behavior: none;
+  overflow-x: hidden;
+  min-height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
