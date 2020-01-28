@@ -1,0 +1,21 @@
+@import '../../variables.scss';
+
+.gameCard {
+  width: 200px;
+  margin-bottom: 35px;
+
+  img {
+    max-width: 100%;
+    border: 1px solid grey;
+  }
+}
+
+.gameName {
+  font-weight: bold;
+  color: $twitch-ice;
+  text-decoration: none;
+}
+
+.gameName:hover {
+  color: $twitch-purple;
+}

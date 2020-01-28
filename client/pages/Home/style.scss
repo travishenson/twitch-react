@@ -1,0 +1,12 @@
+.home {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.topGames {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 200px);
+  grid-gap: 0.5rem;
+  justify-content: space-between;
+}

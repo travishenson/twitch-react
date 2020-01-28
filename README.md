@@ -6,9 +6,9 @@ TwitchReact (a working title) is a personal project that will integrate elements
 
 ## Tools Used
 TwitchReact is a React app using the following languages, tools, and libraries:
-- HTML, CSS/SASS, and JavaScript
-- Webpack & Babel
-- React
+- React & JSX for front end
+- Express for the back end
+- Webpack and Babel to bundle app for production
 
 ## Screenshots and GIFs
 Images of the app will be posted here as it develops and takes shape.

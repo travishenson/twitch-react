@@ -6,6 +6,7 @@ import './App.scss';
 
 import Home from './pages/Home';
 import About from './pages/About';
+import Game from './pages/Game';
 
 class App extends Component {
   render() {
@@ -13,7 +14,8 @@ class App extends Component {
       <Router className='app'>
         <Switch>
           <Route path='/' exact component={Home} />
-          <Route path='/about' exact component={About}/>
+          <Route path='/about' exact component={About} />
+          <Route path='/game/:id' exact component={Game} />
         </Switch>
       </Router>
     )
