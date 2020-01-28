@@ -1,0 +1,6 @@
+@import '../../variables.scss';
+
+.hero {
+  height: calc(80vh);
+  border-bottom: 1px solid $twitch-ice;
+}

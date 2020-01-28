@@ -3,6 +3,7 @@ import axios from 'axios';
 import './style.scss';
 
 import GameCard from '../../components/GameCard';
+import Hero from '../../components/Hero';
 
 function Home() {
   const [topGames, setTopGames] = useState([]);
@@ -14,6 +15,7 @@ function Home() {
       axios.get('/api/twitch/topgames')
         .then((response) => {
           if (mounted) {
+            document.title = 'TwitchReact';
             setTopGames(response.data.topGames);
           }
         })
@@ -28,8 +30,8 @@ function Home() {
 
   return (
     <div className='home'>
-      <h1>Welcome to TwitchReact</h1>
-      <h2>Here are the top games being streamed on Twitch right now.</h2>
+      <Hero />
+      <h2>Here are the top games being streamed on Twitch right now:</h2>
       <div className='topGames'>
         {topGames.map((game) => (
           <GameCard

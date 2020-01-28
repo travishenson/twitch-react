@@ -18,8 +18,8 @@ function Game(props) {
         .then(function (response) {
           const gameData = response.data.gameData[0];
           if (mounted) {
-            setGameInfo(gameData);
             document.title = `${gameData.name} on TwitchReact`;
+            setGameInfo(gameData);
           }
       })
     }

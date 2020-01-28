@@ -10,12 +10,18 @@
   }
 }
 
+.gameCard:hover {
+  .gameName {
+    color: $twitch-purple
+  }
+}
+
 .gameName {
   font-weight: bold;
   color: $twitch-ice;
   text-decoration: none;
 }
 
-.gameName:hover {
-  color: $twitch-purple;
-}
+// .gameName:hover {
+//   color: $twitch-purple;
+// }

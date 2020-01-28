@@ -1,0 +1,35 @@
+@import '../../variables.scss';
+
+nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 55px;
+  padding: 5px 15px;
+  border-bottom: 2px solid $twitch-black;
+  background-color: $twitch-grey;
+  box-sizing: border-box;
+  font-size: 16px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: inline-block;
+      color: $twitch-ice;
+      margin-left: 20px;
+    }
+  }
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+  color: $twitch-ice;
+  text-decoration: none;
+}
