@@ -1,6 +1,21 @@
 @import '../../variables.scss';
 
 .hero {
-  height: calc(80vh);
+  height: 80vh;
   border-bottom: 1px solid $twitch-ice;
+}
+
+.heroContent {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100%;
+
+  h1 {
+    text-align: center;
+    font-size: 42px;
+  }
 }
