@@ -1,0 +1,14 @@
+@import '../../variables.scss';
+
+.streamsSection {
+  margin-top: 15px;
+  border-top: 1px solid $twitch-ice;
+}
+
+.streamsGrid {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-content: space-between;
+  grid-gap: 1rem;
+}

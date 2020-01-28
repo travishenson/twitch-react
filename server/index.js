@@ -21,16 +21,23 @@ const helixRequest = axios.create({
 
 app.get('/api/twitch/topgames', (req, res) => {
   helixRequest.get('/games/top')
-    .then(
-      (response) => { res.send({ topGames: response.data.data }) }
-    )
+    .then((response) => {
+      res.send({ topGames: response.data.data })
+    })
 })
 
 app.get('/api/twitch/games/:id', (req, res) => {
   helixRequest.get(`/games?id=${req.params.id}`)
-    .then(
-      (response) => { res.send({ gameData: response.data.data }) }
-    )
+    .then((response) => {
+      res.send({ gameData: response.data.data })
+    })
+})
+
+app.get('/api/twitch/streams/:gameid', (req, res) => {
+  helixRequest.get(`/streams?game_id=${req.params.gameid}`)
+    .then((response) => {
+      res.send({ streamsData: response.data.data})
+    })
 })
 
 app.listen(port, () => {
