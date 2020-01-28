@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
+import ScrollToTop from './utils/scroll-to-top';
 
 import './App.scss';
 
@@ -13,6 +14,7 @@ import Game from './pages/Game';
 function App() {
   return (
     <Router className='app'>
+      <ScrollToTop />
       <Navbar />
       <Switch>
         <main>
