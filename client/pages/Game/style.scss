@@ -8,7 +8,7 @@
 .streamsGrid {
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   justify-content: space-between;
   grid-gap: 1rem;
 }

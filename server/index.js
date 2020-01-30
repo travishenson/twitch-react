@@ -40,6 +40,13 @@ app.get('/api/twitch/streams/:gameid', (req, res) => {
     })
 })
 
+app.get('/api/twitch/users/:userid', (req, res) => {
+  helixRequest.get(`/users?id=${req.params.userid}`)
+    .then((response) => {
+      res.send({ userData: response.data.data })
+    })
+})
+
 app.listen(port, () => {
   console.log(`Server now listening on Port ${port}...`);
 });

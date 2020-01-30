@@ -10,6 +10,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Game from './pages/Game';
+import User from './pages/User';
+import StreamPage from './pages/Stream';
 
 function App() {
   return (
@@ -17,11 +19,15 @@ function App() {
       <ScrollToTop />
       <Navbar />
       <Switch>
-        <main>
-          <Route path='/' exact component={Home} />
-          <Route path='/about' exact component={About} />
-          <Route path='/game/:id' exact component={Game} />
-        </main>
+        <>
+          <main>
+            <Route path='/' exact component={Home} />
+            <Route path='/about' exact component={About} />
+            <Route path='/game/:id' exact component={Game} />
+            <Route path='/user/:username' exact component={User} />
+            <Route path='/stream/:id' exact component={StreamPage} />
+          </main>
+        </>
       </Switch>
     </Router>
   )

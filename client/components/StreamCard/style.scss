@@ -1,9 +1,41 @@
 @import '../../variables.scss';
 
+.streamCardContainer {
+  a {
+    text-decoration: none;
+  }
+}
+
+.streamCardContainer:hover {
+  color: $twitch-ice;
+}
+
 .streamCard {
   min-height: 250px;
+  background-color: $twitch-grey;
+  border-radius: 10px;
+  padding-bottom: 5px;
 
   img {
     max-width: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+}
+
+.streamCard:hover {
+  color: $twitch-ice;
+  filter: brightness(135%);
+}
+
+.streamInfo {
+  padding: 0px 10px;
+  font-size: 14px;
+
+  h2 {
+    font-size: 16px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

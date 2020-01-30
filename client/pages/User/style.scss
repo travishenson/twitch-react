@@ -1,0 +1,17 @@
+.streamContainer {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+  margin: 25px auto;
+
+  iframe {
+    height: 100%;
+    width: 100%;
+    max-width: 930px;
+    max-height: 523px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    margin: 0 auto;
+  }
+}

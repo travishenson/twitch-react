@@ -19,4 +19,12 @@ body {
 main {
   max-width: 90%;
   margin: 60px auto 25px auto;
+
+  a {
+    color: $twitch-ice;
+  }
+
+  a:hover {
+    color: $twitch-purple;
+  }
 }

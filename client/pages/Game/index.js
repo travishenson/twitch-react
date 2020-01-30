@@ -22,7 +22,7 @@ function Game(props) {
         .then(function (response) {
           const gameData = response.data.gameData[0];
           if (mounted) {
-            document.title = `${gameData.name} on TwitchReact`;
+            document.title = `${gameData.name} - TwitchReact`;
             setGameInfo(gameData);
           }
         })
@@ -31,7 +31,6 @@ function Game(props) {
         .then(function (response) {
           const streamsData = response.data.streamsData;
           if (mounted) {
-            console.log(streamsData);
             setStreams(streamsData);
           }
         })
