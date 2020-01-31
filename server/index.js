@@ -47,6 +47,25 @@ app.get('/api/twitch/users/:userid', (req, res) => {
     })
 })
 
+// IGDB API setup and routes
+app.get('/api/igdb/games/:gamename', (req, res) => {
+  axios({
+    url: "https://api-v3.igdb.com/games",
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'user-key': process.env.IGDB_API_KEY
+    },
+    data: `fields *; where name = "${req.params.gamename}";`
+  })
+    .then(response => {
+      res.send({ igdbData: response.data[0] });
+    })
+    .catch(err => {
+        console.error(err);
+    });
+})
+
 app.listen(port, () => {
   console.log(`Server now listening on Port ${port}...`);
 });
