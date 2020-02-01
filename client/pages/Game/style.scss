@@ -1,5 +1,9 @@
 @import '../../variables.scss';
 
+.gameSection {
+  display: flex;
+}
+
 .streamsSection {
   margin-top: 15px;
   border-top: 1px solid $twitch-ice;

@@ -56,7 +56,25 @@ app.get('/api/igdb/games/:gamename', (req, res) => {
         'Accept': 'application/json',
         'user-key': process.env.IGDB_API_KEY
     },
-    data: `fields *; where name = "${req.params.gamename}";`
+    data: `fields 
+      aggregated_rating,
+      aggregated_rating_count,
+      first_release_date,
+      game_modes.*,
+      genres.*,
+      involved_companies.*,
+      name,
+      platforms.*,
+      rating,
+      rating_count,
+      release_dates.*,
+      screenshots.*,
+      summary,
+      themes.*,
+      total_rating,
+      total_rating_count,
+      url; 
+      where name = "${req.params.gamename}";`
   })
     .then(response => {
       res.send({ igdbData: response.data[0] });
