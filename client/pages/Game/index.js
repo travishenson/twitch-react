@@ -12,6 +12,7 @@ function Game(props) {
     criticRatingCount: '',
     gameModes: [],
     genres: [],
+    headerImageId: '',
     name: '',
     platforms: [],
     releaseDate: '',
@@ -49,12 +50,15 @@ function Game(props) {
     let month = UTCString.substring(4, 8);
     let year = UTCString.substring(8, 12);
 
-    if (date > 3 && date < 21) date += 'th';
-    switch (date % 10) {
-      case 1:  date += "st";
-      case 2:  date += "nd";
-      case 3:  date += "rd";
-      default: date += "th";
+    if (date > 3 && date < 21) {
+      date += 'th'
+    } else {
+      switch (date % 10) {
+        case 1:  date += "st";
+        case 2:  date += "nd";
+        case 3:  date += "rd";
+        default: date += "th";
+      }
     }
 
     return `${month} ${date}, ${year}`;
@@ -73,23 +77,25 @@ function Game(props) {
 
       const igdbGameResponse = await axios.get('/api/igdb/games/' + twitchGameData.name);
       const igdbGameData = await igdbGameResponse.data.igdbData;
+      
       setIgdbData({
-        criticRating: igdbGameData.aggregated_rating,
+        criticRating: Math.round(igdbGameData.aggregated_rating * 10) / 10,
         criticRatingCount: igdbGameData.aggregated_rating_count,
         gameModes: igdbGameData.game_modes,
         genres: igdbGameData.genres,
+        headerImageId: igdbGameResponse.data.headerImageId,
         name: igdbGameData.name,
         platforms: igdbGameData.platforms,
         releaseDate: igdbGameData.first_release_date,
-        screenshots: igdbGameData.screenshots,
+        screenshots: igdbGameData.screenshots[0],
         summary: igdbGameData.summary,
         themes: igdbGameData.themes,
-        totalRating: igdbGameData.total_rating,
+        totalRating: Math.round(igdbGameData.total_rating * 10) / 10,
         totalRatingCount: igdbGameData.total_rating_count,
         url: igdbGameData.url,
-        userRating: igdbGameData.rating,
+        userRating: Math.round(igdbGameData.rating * 10) / 10,
         userRatingCount: igdbGameData.rating_count
-      });
+      })
     } catch (error) {
       console.log(error)
     }
@@ -97,23 +103,37 @@ function Game(props) {
 
   return (
     <div className='game'>
-      <div className='gameSection'>
-        <div className='mainInfo'>
-          <h1>{gameInfo.name}</h1>
+      <div className='gameHeader'>
+        <img
+          className='headerImage'
+          src={`https://images.igdb.com/igdb/image/upload/t_original/${igdbData.headerImageId}.jpg`}
+          alt={igdbData.name}
+          key={igdbData.headerImageId}
+        />
+        <div className='gameCover'>
           <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
-          <p>View {igdbData.name} on IGDB: {igdbData.url}</p>
-          <div className='ratings'>
-            <p>Total rating: {igdbData.totalRating} from {igdbData.totalRatingCount} critics and users</p>
-            <p>Critic ratings: {igdbData.criticRating} from {igdbData.criticRatingCount} critics</p>
-            <p>IGDB user ratings: {igdbData.userRating} from {igdbData.userRatingCount} users</p>
-          </div>
+          <p>View <a href={igdbData.url} target='_blank'>{igdbData.name} on IGDB</a></p>
         </div>
-        <div className='detailedInfo'>
-          <h2>About {gameInfo.name}</h2>
-          <p>Release date: {parseUnixDate(igdbData.releaseDate)}</p>
-          <p>Summary: {igdbData.summary}</p>
-          <p>Need to add maps for game modes, genres, platforms, screenshots, and themes.</p>
+      </div>
+      <div className='gameSection'>
+        <h1>{gameInfo.name}</h1>
+        <div className='ratings'>
+          <p>Total rating: {igdbData.totalRating} from {igdbData.totalRatingCount} critics and users</p>
+          <p>Critic ratings: {igdbData.criticRating} from {igdbData.criticRatingCount} critics</p>
+          <p>IGDB user ratings: {igdbData.userRating} from {igdbData.userRatingCount} users</p>
         </div>
+        <p>Release date: {parseUnixDate(igdbData.releaseDate)}</p>
+        <p>Summary: {igdbData.summary}</p>
+        <div className='screenshots'>
+          {/* {igdbData.screenshots.map((screenshot) => (
+            <div>
+              <img src={`https://images.igdb.com/igdb/image/upload/t_original/${screenshot.image_id}.jpg`} />
+              <p>{screenshot.image_id}</p>
+              <p>{screenshot.url}</p>
+            </div>
+          ))} */}
+        </div>
+        <p>Need to add maps for game modes, genres, platforms, screenshots, and themes.</p>
       </div>
       <div className='streamsSection'>
         <h2>Here are some popular {gameInfo.name} streams</h2>
