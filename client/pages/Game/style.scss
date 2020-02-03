@@ -12,26 +12,63 @@
     margin-right: -50vw;
     max-width: 100vw;
     width: 100vw;
-    height: 250px;
+    height: 30vh;
     object-fit: cover;
-  }
-
-  .gameCover {
-    max-width: 285px;
-    position: absolute;
-    top: 50px;
+    opacity: 0.5;
+    z-index: -10;
   }
 }
 
 .gameSection {
-  padding: 0;
-  margin-left: 300px;
-  min-width: 500px;
-  max-width: 100vw;
+  width: 90vw;
+  display: flex;
+  margin-top: -160px;
+  margin-bottom: 2em;
+}
+
+.gameCover {
+  flex: 1;
+  min-width: 250px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.gameInfo {
+  flex: 3.5;
+  align-self: stretch;
+  padding: 125px 2em 0 2em;
+}
+
+/* Styles for Smaller Screens */
+@media only screen and (max-width: 800px) {
+  .gameSection {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .gameCover {
+    flex: 1;
+
+    img {
+      width: 200px;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .gameInfo {
+    flex: 1;
+    padding: 0;
+
+    h1 {
+      text-align: center;
+    }
+  }
 }
 
 .streamsSection {
-  margin-top: 15px;
   border-top: 1px solid $twitch-ice;
 }
 

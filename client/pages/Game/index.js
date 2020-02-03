@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.scss';
 
+import TwitchPattern from '../../assets/images/twitchpattern.jpg';
+
 import StreamCard from '../../components/StreamCard';
 
 function Game(props) {
@@ -100,59 +102,84 @@ function Game(props) {
       console.log(error)
     }
   }
-
-  return (
-    <div className='game'>
-      <div className='gameHeader'>
-        <img
-          className='headerImage'
-          src={`https://images.igdb.com/igdb/image/upload/t_original/${igdbData.headerImageId}.jpg`}
-          alt={igdbData.name}
-          key={igdbData.headerImageId}
-        />
-        <div className='gameCover'>
-          <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
-          <p>View <a href={igdbData.url} target='_blank'>{igdbData.name} on IGDB</a></p>
+  if (igdbData.url != '') {
+    return (
+      <div className='game'>
+        <div className='gameHeader'>
+          <img
+            className='headerImage'
+            src={`https://images.igdb.com/igdb/image/upload/t_original/${igdbData.headerImageId}.jpg`}
+            alt={igdbData.name}
+            key={igdbData.headerImageId}
+          />
         </div>
-      </div>
-      <div className='gameSection'>
-        <h1>{gameInfo.name}</h1>
-        <div className='ratings'>
-          <p>Total rating: {igdbData.totalRating} from {igdbData.totalRatingCount} critics and users</p>
-          <p>Critic ratings: {igdbData.criticRating} from {igdbData.criticRatingCount} critics</p>
-          <p>IGDB user ratings: {igdbData.userRating} from {igdbData.userRatingCount} users</p>
-        </div>
-        <p>Release date: {parseUnixDate(igdbData.releaseDate)}</p>
-        <p>Summary: {igdbData.summary}</p>
-        <div className='screenshots'>
-          {/* {igdbData.screenshots.map((screenshot) => (
-            <div>
-              <img src={`https://images.igdb.com/igdb/image/upload/t_original/${screenshot.image_id}.jpg`} />
-              <p>{screenshot.image_id}</p>
-              <p>{screenshot.url}</p>
+        <div className='gameSection'>
+          <div className='gameCover'>
+            <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
+          </div>
+          <div className='gameInfo'>
+            <h1>{gameInfo.name}</h1>
+            <div className='ratings'>
+              <p>Total rating: {igdbData.totalRating} from {igdbData.totalRatingCount} critics and users</p>
+              <p>Critic ratings: {igdbData.criticRating} from {igdbData.criticRatingCount} critics</p>
+              <p>IGDB user ratings: {igdbData.userRating} from {igdbData.userRatingCount} users</p>
             </div>
-          ))} */}
+            <p>Release date: {parseUnixDate(igdbData.releaseDate)}</p>
+            <p>Summary: {igdbData.summary}</p>
+            {/* Need to add maps for game modes, genres, platforms, screenshots, and themes. */}
+          </div>
         </div>
-        <p>Need to add maps for game modes, genres, platforms, screenshots, and themes.</p>
-      </div>
-      <div className='streamsSection'>
-        <h2>Here are some popular {gameInfo.name} streams</h2>
-        <div className='streamsGrid'>
-          {streams.map((stream) => (
-            <StreamCard
-              id={stream.id}
-              title={stream.title}
-              userID={stream.user_id}
-              username={stream.user_name}
-              viewers={stream.viewer_count}
-              thumbnail={stream.thumbnail_url}
-              key={stream.id}
-            />
-          ))}
+        <div className='streamsSection'>
+          <h2>Popular {gameInfo.name} streams</h2>
+          <div className='streamsGrid'>
+            {streams.map((stream) => (
+              <StreamCard
+                id={stream.id}
+                title={stream.title}
+                userID={stream.user_id}
+                username={stream.user_name}
+                viewers={stream.viewer_count}
+                thumbnail={stream.thumbnail_url}
+                key={stream.id}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div className='game'>
+        <div className='gameHeader'>
+          <img className='headerImage' src={TwitchPattern} alt='twitch-header-image' />
+        </div>
+        <div className='gameSection'>
+          <div className='gameCover'>
+            <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
+          </div>
+          <div className='gameInfo'>
+            <h1>{gameInfo.name}</h1>
+          </div>
+        </div>
+        <div className='streamsSection'>
+          <h2>Popular <i>{gameInfo.name}</i> streams</h2>
+          <div className='streamsGrid'>
+            {streams.map((stream) => (
+              <StreamCard
+                id={stream.id}
+                title={stream.title}
+                userID={stream.user_id}
+                username={stream.user_name}
+                viewers={stream.viewer_count}
+                thumbnail={stream.thumbnail_url}
+                key={stream.id}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Game;

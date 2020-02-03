@@ -18,10 +18,10 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          { loader: 'file-loader' }
-        ]
+        test: /\.(jpg|png)$/,
+        use: {
+          loader: 'url-loader'
+        }
       }
     ]
   },
