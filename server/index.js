@@ -77,10 +77,9 @@ app.get('/api/igdb/games/:gamename', (req, res) => {
       where name = "${req.params.gamename}";`
   })
     .then(response => {
-      console.log(response.data[0])
       res.send({
         igdbData: response.data[0],
-        headerImageId: response.data[0].screenshots[0].image_id
+        headerImageId: response.data[0].screenshots[1].image_id
       });
     })
     .catch(err => {

@@ -39,6 +39,14 @@
   flex: 3.5;
   align-self: stretch;
   padding: 125px 2em 0 2em;
+
+  h1 {
+    margin-bottom: 0;
+  }
+
+  a {
+    font-size: 14px;
+  }
 }
 
 /* Styles for Smaller Screens */

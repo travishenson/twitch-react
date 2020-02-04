@@ -4,11 +4,14 @@ import './style.scss';
 
 import TwitchPattern from '../../assets/images/twitchpattern.jpg';
 
+import GameRating from '../../components/GameRating';
 import StreamCard from '../../components/StreamCard';
 
 function Game(props) {
   const [gameInfo, setGameInfo] = useState({ name: '', box_art_url: '' });
+
   const [streams, setStreams] = useState([]);
+
   const [igdbData, setIgdbData] = useState({
     criticRating: '',
     criticRatingCount: '',
@@ -81,7 +84,7 @@ function Game(props) {
       const igdbGameData = await igdbGameResponse.data.igdbData;
       
       setIgdbData({
-        criticRating: Math.round(igdbGameData.aggregated_rating * 10) / 10,
+        criticRating: Math.round(igdbGameData.aggregated_rating),
         criticRatingCount: igdbGameData.aggregated_rating_count,
         gameModes: igdbGameData.game_modes,
         genres: igdbGameData.genres,
@@ -92,16 +95,17 @@ function Game(props) {
         screenshots: igdbGameData.screenshots[0],
         summary: igdbGameData.summary,
         themes: igdbGameData.themes,
-        totalRating: Math.round(igdbGameData.total_rating * 10) / 10,
+        totalRating: Math.round(igdbGameData.total_rating),
         totalRatingCount: igdbGameData.total_rating_count,
         url: igdbGameData.url,
-        userRating: Math.round(igdbGameData.rating * 10) / 10,
+        userRating: Math.round(igdbGameData.rating),
         userRatingCount: igdbGameData.rating_count
       })
     } catch (error) {
       console.log(error)
     }
   }
+
   if (igdbData.url != '') {
     return (
       <div className='game'>
@@ -119,14 +123,44 @@ function Game(props) {
           </div>
           <div className='gameInfo'>
             <h1>{gameInfo.name}</h1>
-            <div className='ratings'>
-              <p>Total rating: {igdbData.totalRating} from {igdbData.totalRatingCount} critics and users</p>
-              <p>Critic ratings: {igdbData.criticRating} from {igdbData.criticRatingCount} critics</p>
-              <p>IGDB user ratings: {igdbData.userRating} from {igdbData.userRatingCount} users</p>
+            <a href={igdbData.url} alt={`${gameInfo.name} on IGDB`} target='_blank'>
+              View {gameInfo.name} on IGDB
+            </a>
+            <GameRating
+              totalRating={igdbData.totalRating}
+              criticRating={igdbData.criticRating}
+              criticRatingCount={igdbData.criticRatingCount}
+              userRating={igdbData.userRating}
+              userRatingCount={igdbData.userRatingCount}
+            />
+            <p className='releaseDate'>
+              <span className='bold'>Release date:</span> <br />
+              {parseUnixDate(igdbData.releaseDate)}
+            </p>
+            <p className='summary'>
+              <span className='bold'>Summary:</span> <br />
+              {igdbData.summary}
+            </p>
+            <div className='secondaryInfo'>
+              <p className='genres'>
+                <span className='bold'>Genres: </span>
+                {igdbData.genres.map((genre, index) => (
+                  <span key={genre.id}>{(index ? ', ' : '') + genre.name}</span>
+                ))}
+              </p>
+              <p className='platforms'>
+                <span className='bold'>Platforms: </span>
+                {igdbData.platforms.map((platform, index) => (
+                  <span key={platform.id}>{(index ? ', ' : '') + platform.name}</span>
+                ))}
+              </p>
+              <p className='themes'>
+                <span className='bold'>Themes: </span>
+                {igdbData.themes.map((theme, index) => (
+                  <span key={theme.id}>{(index ? ', ' : '') + theme.name}</span>
+                ))}
+              </p>
             </div>
-            <p>Release date: {parseUnixDate(igdbData.releaseDate)}</p>
-            <p>Summary: {igdbData.summary}</p>
-            {/* Need to add maps for game modes, genres, platforms, screenshots, and themes. */}
           </div>
         </div>
         <div className='streamsSection'>
