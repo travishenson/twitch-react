@@ -14,41 +14,47 @@ app.get('/', (req, res) => {
 })
 
 // Twitch API setup and routes
-const helixRequest = axios.create({
-  baseURL: 'https://api.twitch.tv/helix',
-  headers: { 'Client-ID': process.env.TWITCH_API_KEY }
-});
+const twitchAuthUrl = `https://id.twitch.tv/oauth2/token\
+?client_id=${process.env.TWITCH_CLIENT_ID}\
+&client_secret=${process.env.TWITCH_CLIENT_SECRET}\
+&grant_type=client_credentials`;
 
-app.get('/api/twitch/topgames', (req, res) => {
-  helixRequest.get('/games/top')
-    .then((response) => {
-      res.send({ topGames: response.data.data })
-    })
+const helixGet = async (endpoint) => {
+  const tokenReq = await axios.post(twitchAuthUrl);
+  const accessToken = tokenReq.data.access_token;
+
+  const reqData = await axios.get('https://api.twitch.tv/helix' + endpoint, {
+    headers: {
+      'Client-ID': process.env.TWITCH_CLIENT_ID,
+      'Authorization': 'Bearer ' + accessToken
+    }
+  });
+
+  return reqData.data.data;
+}
+
+app.get('/api/twitch/topgames', async (req, res) => {
+  const topGames = await helixGet('/games/top');
+  res.send({ topGames });
 })
 
-app.get('/api/twitch/games/:id', (req, res) => {
-  helixRequest.get(`/games?id=${req.params.id}`)
-    .then((response) => {
-      res.send({ gameData: response.data.data })
-    })
+app.get('/api/twitch/games/:id', async (req, res) => {
+  const gameData = await helixGet(`/games?id=${req.params.id}`);
+  res.send({ gameData });
 })
 
-app.get('/api/twitch/streams/:gameid', (req, res) => {
-  helixRequest.get(`/streams?game_id=${req.params.gameid}`)
-    .then((response) => {
-      res.send({ streamsData: response.data.data})
-    })
+app.get('/api/twitch/streams/:gameid', async (req, res) => {
+  const streamsData = await helixGet(`/streams?game_id=${req.params.gameid}`);
+  res.send({ streamsData });
 })
 
-app.get('/api/twitch/users/:userid', (req, res) => {
-  helixRequest.get(`/users?id=${req.params.userid}`)
-    .then((response) => {
-      res.send({ userData: response.data.data })
-    })
+app.get('/api/twitch/users/:userid', async (req, res) => {
+  const userData = await helixGet(`/users?id=${req.params.userid}`);
+  res.send({ userData });
 })
 
 // IGDB API setup and routes
-app.get('/api/igdb/games/:gamename', (req, res) => {
+app.get('/api/igdb/games/:gameslug', (req, res) => {
   axios({
     url: "https://api-v3.igdb.com/games",
     method: 'POST',
@@ -74,7 +80,7 @@ app.get('/api/igdb/games/:gamename', (req, res) => {
       total_rating,
       total_rating_count,
       url; 
-      where name = "${req.params.gamename}";`
+      where slug = "${req.params.gameslug}";`
   })
     .then(response => {
       res.send({

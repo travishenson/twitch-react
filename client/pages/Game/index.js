@@ -80,7 +80,8 @@ function Game(props) {
       const twitchStreamData = await twitchStreamResponse.data.streamsData;
       setStreams(twitchStreamData);
 
-      const igdbGameResponse = await axios.get('/api/igdb/games/' + twitchGameData.name);
+      let gameSlug = twitchGameData.name.toLowerCase().replace(/[\W]+/gi, '-');
+      const igdbGameResponse = await axios.get('/api/igdb/games/' + gameSlug);
       const igdbGameData = await igdbGameResponse.data.igdbData;
       
       setIgdbData({
