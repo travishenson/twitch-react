@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { hot } from 'react-hot-loader';
 import ScrollToTop from './utils/scroll-to-top';
 
@@ -13,9 +14,11 @@ import Game from './pages/Game';
 import User from './pages/User';
 import StreamPage from './pages/Stream';
 
+const history = createBrowserHistory();
+
 function App() {
   return (
-    <Router className='app'>
+    <Router className='app' history={history}>
       <ScrollToTop />
       <Navbar />
       <Switch>
