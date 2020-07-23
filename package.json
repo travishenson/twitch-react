@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "proxy": "http://localhost:4000",
-  "homepage": "./",
+  "homepage": "https://twitch-react.herokuapp.com",
   "scripts": {
     "build": "webpack --mode production",
     "client": "webpack-dev-server --mode development",
