@@ -6,8 +6,8 @@ function Hero() {
     <div className='hero'>
       <div className='heroContent'>
         <h1>Welcome to TwitchReact!</h1>
-        <p>TwitchReact is a Twitch client that is built using the Twitch API and the Internet Games Database API.</p>
-        <p>It is currently under construction with limited functionality, but feel free to look around.</p>
+        <p>TwitchReact is a Twitch-centered client that is built using the Twitch and Internet Games Database APIs.</p>
+        <p>Currently, it has the functionality to browse the top-streamed games on Twitch, view IGDB-sourced information on those games, and watch the top streams of each game.</p>
       </div>
     </div>
   )
