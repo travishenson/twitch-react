@@ -7,7 +7,13 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // Serve static React files
-app.use(express.static(path.join(__dirname, '../dist')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../dist')));
+
+  app.get('*', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
+  });
+}
 
 // Twitch API setup and routes
 const twitchAuthUrl = `https://id.twitch.tv/oauth2/token\
