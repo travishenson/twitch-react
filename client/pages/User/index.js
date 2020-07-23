@@ -20,7 +20,7 @@ function User(props) {
       <div className='streamContainer'>
         <iframe
           className='twitchStream'
-          src={`https://player.twitch.tv/?channel=${loginName}&parent=www.twitch-react.herokuapp.com`}
+          src={`https://player.twitch.tv/?channel=${loginName}&parent=twitch-react.herokuapp.com`}
           frameBorder='0'
           scrolling='no'
           allowFullScreen
