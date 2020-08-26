@@ -7,7 +7,11 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // Serve static React files
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../public')));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../dist')));
+};
 
 // Twitch API setup and routes
 const helixGet = async (endpoint) => {

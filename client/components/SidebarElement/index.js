@@ -6,18 +6,20 @@ import './style.scss';
 const SidebarElement = (props) => {
   const [userLogin, setUserLogin] = useState('');
 
-  useEffect(() => {
-    const userIdToSlug = (id) => {
-      axios.get('/api/twitch/users/' + id)
-        .then(response => {
-          setUserLogin(response.data.userData[0].login);
-        })
-    }
-
-    userIdToSlug(props.id);
-  }, [])
-
   if (props.type === 'user') {
+    useEffect(() => {
+      const userIdToSlug = (id) => {
+        axios.get('/api/twitch/users/' + id)
+          .then(response => {
+            setUserLogin(response.data.userData[0].login);
+          })
+      }
+  
+      if (props.id !== null) {
+        userIdToSlug(props.id);
+      }
+    }, props.id)
+    
     return(
       <Link to={`/user/${userLogin}`}>
         <div className='sidebar-element'>
