@@ -25,70 +25,70 @@ function GameRating(props) {
     if (rating <= 14) {
       return (
         setCircleInfo({
-          class: 'totalRating awful',
+          class: 'total-rating awful',
           text: 'Awful'
         })
       )
     } else if (rating <= 24) {
       return (
         setCircleInfo({
-          class: 'totalRating veryBad',
+          class: 'total-rating veryBad',
           text: 'Very Bad'
         })
       )
     } else if (rating <= 34) {
       return (
         setCircleInfo({
-          class: 'totalRating bad',
+          class: 'total-rating bad',
           text: 'Bad'
         })
       )
     } else if (rating <= 44) {
       return (
         setCircleInfo({
-          class: 'totalRating poor',
+          class: 'total-rating poor',
           text: 'Poor'
         })
       )
     } else if (rating <= 54) {
       return (
         setCircleInfo({
-          class: 'totalRating average',
+          class: 'total-rating average',
           text: 'Average'
         })
       )
     } else if (rating <= 64) {
       return (
         setCircleInfo({
-          class: 'totalRating fair',
+          class: 'total-rating fair',
           text: 'Fair'
         })
       )
     } else if (rating <= 74) {
       return (
         setCircleInfo({
-          class: 'totalRating alright',
+          class: 'total-rating alright',
           text: 'Alright'
         })
       )
     } else if (rating <= 84) {
       return (
         setCircleInfo({
-          class: 'totalRating good',
+          class: 'total-rating good',
           text: 'Good'
         })
       )
     } else if (rating <= 94) {
       return (
         setCircleInfo({
-          class: 'totalRating great',
+          class: 'total-rating great',
           text: 'Great'
         })
       )
     } else {
       return (
         setCircleInfo({
-          class: 'totalRating superb',
+          class: 'total-rating superb',
           text: 'Superb'
         })
       )
@@ -99,18 +99,18 @@ function GameRating(props) {
     <div className='ratings'>
       <div className={circleInfo.class}>
         <div>
-          <span className='ratingNumber'>{props.totalRating}</span> <br />
-          <span className='ratingName'>{circleInfo.text}</span>
+          <span className='rating-number'>{props.totalRating}</span> <br />
+          <span className='rating-name'>{circleInfo.text}</span>
         </div>
       </div>
-      <div className='separateRatings'>
-        <p className='criticRating'>
-          <span className='ratingHeading'>Critics: {props.criticRating}</span> <br />
-          <span className='ratingCount'>{props.criticRatingCount} critic ratings</span>
+      <div className='separate-ratings'>
+        <p className='critic-rating'>
+          <span className='rating-heading'>Critics: {props.criticRating}</span> <br />
+          <span className='rating-count'>{props.criticRatingCount} critic ratings</span>
         </p>
-        <p className='userRating'>
-          <span className='ratingHeading'>IGDB Users: {props.userRating}</span> <br />
-          <span className='ratingCount'>{props.userRatingCount} user ratings</span>
+        <p className='user-rating'>
+          <span className='rating-heading'>IGDB Users: {props.userRating}</span> <br />
+          <span className='rating-count'>{props.userRatingCount} user ratings</span>
         </p>
       </div>
     </div>

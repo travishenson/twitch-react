@@ -1,0 +1,74 @@
+@use '../../sass/main.scss';
+
+.sidebar {
+  background: main.$twitch-darkgrey;
+  border-right: 2px solid main.$twitch-grey;
+  font-size: 14px;
+  height: 100%;
+  left: 0;
+  min-width: 200px;
+  transition: all 0.35s;
+  width: 200px;
+
+  a {
+    text-decoration: none;
+
+    &:hover { 
+      color: main.$twitch-ice;
+    }
+  }
+}
+
+.sidebar-closed {
+  margin-left: -205px;
+  width: 0;
+}
+
+.sidebar-active {
+  div { background: main.$twitch-grey; }
+}
+
+nav {
+  margin: 15px 0;
+
+  div {
+    align-items: center;
+    display: flex;
+    height: 40px;
+
+    &:hover {
+      background: main.$twitch-grey;
+    }
+
+    p {
+      margin-left: 20px;
+    }
+  }
+}
+
+.sidebar-section {
+  border-top: 2px solid main.$twitch-grey;
+}
+
+.section-title {
+  font-size: 14px;
+  height: 25px;
+  margin-left: 20px;
+  text-transform: uppercase;
+
+  p {
+    font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .sidebar {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .sidebar-closed {
+    margin-left: -101%;
+  }
+}

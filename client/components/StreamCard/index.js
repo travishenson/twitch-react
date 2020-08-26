@@ -45,11 +45,11 @@ function StreamCard(props) {
   }, [])
 
   return (
-    <div className='streamCardContainer'>
+    <div className='stream-card-container'>
       <Link to={`/user/${streamInfo.userLogin}`}>
-        <div className='streamCard'>
+        <div className='stream-card'>
           <img src={parseThumbnailUrl(props.thumbnail)} alt={`${props.id}-thumbnail`} />
-          <div className='streamInfo'>
+          <div className='stream-info'>
             <h2>{props.title}</h2>
             {
               compareNames(streamInfo.userLogin, streamInfo.userDisplay) ?

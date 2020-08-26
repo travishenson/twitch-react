@@ -32,7 +32,7 @@ function Home() {
     <div className='home'>
       <Hero />
       <h2>Here are the top games being streamed on Twitch right now:</h2>
-      <div className='topGames'>
+      <div className='top-games'>
         {topGames.map((game) => (
           <GameCard
             name={game.name}

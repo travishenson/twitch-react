@@ -1,0 +1,7 @@
+// Sass variables
+@forward './base/variables';
+@use './base/variables';
+
+// Base styles
+@use './base/global';
+@use './base/typography';

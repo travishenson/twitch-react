@@ -1,0 +1,21 @@
+@use 'variables';
+
+body {
+  background-color: variables.$twitch-darkgrey;
+  color: variables.$twitch-ice;
+  font-family: variables.$font-stack;
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+a {
+  color: variables.$twitch-ice;
+
+  &:hover {
+    color: variables.$twitch-purple;
+  }
+}

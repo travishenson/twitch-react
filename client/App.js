@@ -1,33 +1,39 @@
-import React from 'react';
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import ScrollToTop from './utils/scroll-to-top';
-
 import './App.scss';
 
-import Navbar from './components/Navbar';
-
-import Home from './pages/Home';
-import Game from './pages/Game';
-import User from './pages/User';
-import StreamPage from './pages/Stream';
+import { Sidebar, Topbar } from './components';
+import { Game, Home, StreamPage, User } from './pages';
 
 function App() {
+  const screenWidth = window.innerWidth;
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(screenWidth > 1000 ? false : true);
+
+  const updateSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed)
+  }
+
   return (
     <Router className='app'>
       <ScrollToTop />
-      <Navbar />
-      <Switch>
+      <Topbar updateSidebar={updateSidebar} />
+      <div className='inner-content'>
+        <Sidebar collapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed} />
         <main>
-          <Route path='/' exact component={Home} />
-          <Route path='/game/:id' exact component={Game} />
-          <Route path='/user/:username' exact component={User} />
-          <Route path='/stream/:id' exact component={StreamPage} />
-          <Route path='/*' render={() => <Redirect to='/' />} />
+          <div className='main-container'>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/game/:id' exact component={Game} />
+              <Route path='/user/:username' exact component={User} />
+              <Route path='/stream/:id' exact component={StreamPage} />
+            </Switch>
+          </div>
         </main>
-      </Switch>
+      </div>
     </Router>
   )
 }
 
-export default hot(module)(App);
+ReactDOM.render(<App />, document.getElementById('root'));

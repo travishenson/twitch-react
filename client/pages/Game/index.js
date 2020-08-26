@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import 'regenerator-runtime/runtime.js';
 import './style.scss';
 
 import TwitchPattern from '../../assets/images/twitchpattern.jpg';
+import { parseBoxArtUrl, parseUnixDate } from '../../utils/data-parser';
+import twitchToIgdb from '../../utils/twitch-to-igdb';
 
 import GameRating from '../../components/GameRating';
 import StreamCard from '../../components/StreamCard';
@@ -45,30 +48,6 @@ function Game(props) {
     }
   }, [])
 
-  const parseBoxArtUrl = (url) => {
-    return url.replace('{width}', '272').replace('{height}', '380');
-  }
-
-  const parseUnixDate = (unix) => {
-    let UTCString = new Date(unix * 1000).toUTCString().substring(4, 17);
-    let date = UTCString.substring(0, 3);
-    let month = UTCString.substring(4, 8);
-    let year = UTCString.substring(8, 12);
-
-    if (date > 3 && date < 21) {
-      date += 'th'
-    } else {
-      switch (date % 10) {
-        case 1:  date += "st";
-        case 2:  date += "nd";
-        case 3:  date += "rd";
-        default: date += "th";
-      }
-    }
-
-    return `${month} ${date}, ${year}`;
-  }
-
   const fetchData = async () => {
     try {
       const twitchGameResponse = await axios.get('/api/twitch/games/' + gameId);
@@ -81,7 +60,8 @@ function Game(props) {
       setStreams(twitchStreamData);
 
       let gameSlug = twitchGameData.name.toLowerCase().replace(/[\W]+/gi, '-');
-      const igdbGameResponse = await axios.get('/api/igdb/games/' + gameSlug);
+      let parsedSlug = twitchToIgdb(gameSlug);
+      const igdbGameResponse = await axios.get('/api/igdb/games/' + parsedSlug);
       const igdbGameData = await igdbGameResponse.data.igdbData;
       
       setIgdbData({
@@ -107,22 +87,23 @@ function Game(props) {
     }
   }
 
-  if (igdbData.url != '') {
-    return (
-      <div className='game'>
-        <div className='gameHeader'>
-          <img
-            className='headerImage'
-            src={`https://images.igdb.com/igdb/image/upload/t_original/${igdbData.headerImageId}.jpg`}
-            alt={igdbData.name}
-            key={igdbData.headerImageId}
-          />
-        </div>
-        <div className='gameSection'>
-          <div className='gameCover'>
+  return(
+    <div className='game'>
+      {
+      igdbData.url != '' ?
+        <>
+          <div className='game-header'>
+            <img
+              src={`https://images.igdb.com/igdb/image/upload/t_original/${igdbData.headerImageId}.jpg`}
+              alt={igdbData.name}
+              key={igdbData.headerImageId}
+            />
+          </div>
+          <div className='game-section'>
+          <div className='game-cover'>
             <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
           </div>
-          <div className='gameInfo'>
+          <div className='game-info'>
             <h1>{gameInfo.name}</h1>
             <a href={igdbData.url} alt={`${gameInfo.name} on IGDB`} target='_blank'>
               View {gameInfo.name} on IGDB
@@ -134,15 +115,14 @@ function Game(props) {
               userRating={igdbData.userRating}
               userRatingCount={igdbData.userRatingCount}
             />
-            <p className='releaseDate'>
-              <span className='bold'>Release date:</span> <br />
-              {parseUnixDate(igdbData.releaseDate)}
-            </p>
             <p className='summary'>
-              <span className='bold'>Summary:</span> <br />
               {igdbData.summary}
             </p>
-            <div className='secondaryInfo'>
+            <div className='secondary-info'>
+              <p className='release-date'>
+                <span className='bold'>Release date: </span>
+                {parseUnixDate(igdbData.releaseDate)}
+              </p>
               <p className='genres'>
                 <span className='bold'>Genres: </span>
                 {igdbData.genres.map((genre, index) => (
@@ -164,9 +144,25 @@ function Game(props) {
             </div>
           </div>
         </div>
-        <div className='streamsSection'>
+        </>
+        :
+        <>
+          <div className='game-header'>
+            <img src={TwitchPattern} alt='twitch-header-image' />
+          </div>
+          <div className='game-section'>
+            <div className='game-cover'>
+              <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
+            </div>
+            <div className='game-info'>
+              <h1>{gameInfo.name}</h1>
+            </div>
+          </div>
+        </>
+      }
+      <div className='streams-section'>
           <h2>Popular {gameInfo.name} streams</h2>
-          <div className='streamsGrid'>
+          <div className='streams-grid'>
             {streams.map((stream) => (
               <StreamCard
                 id={stream.id}
@@ -180,41 +176,8 @@ function Game(props) {
             ))}
           </div>
         </div>
-      </div>
-    )
-  } else {
-    return (
-      <div className='game'>
-        <div className='gameHeader'>
-          <img className='headerImage' src={TwitchPattern} alt='twitch-header-image' />
-        </div>
-        <div className='gameSection'>
-          <div className='gameCover'>
-            <img src={parseBoxArtUrl(gameInfo.box_art_url)} alt={`${gameInfo.name}-box-art`} />
-          </div>
-          <div className='gameInfo'>
-            <h1>{gameInfo.name}</h1>
-          </div>
-        </div>
-        <div className='streamsSection'>
-          <h2>Popular <i>{gameInfo.name}</i> streams</h2>
-          <div className='streamsGrid'>
-            {streams.map((stream) => (
-              <StreamCard
-                id={stream.id}
-                title={stream.title}
-                userID={stream.user_id}
-                username={stream.user_name}
-                viewers={stream.viewer_count}
-                thumbnail={stream.thumbnail_url}
-                key={stream.id}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Game;

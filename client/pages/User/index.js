@@ -14,12 +14,12 @@ function User(props) {
    })
 
   return (
-    <div>
+    <div className='user-profile'>
       <h1>{loginName}'s Profile</h1>
       <p>Currently streaming:</p>
-      <div className='streamContainer'>
+      <div className='stream-container'>
         <iframe
-          className='twitchStream'
+          className='twitch-stream'
           src={`https://player.twitch.tv/?channel=${loginName}&parent=twitch-react.herokuapp.com`}
           frameBorder='0'
           scrolling='no'

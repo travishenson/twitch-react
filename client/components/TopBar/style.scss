@@ -1,0 +1,53 @@
+@use '../../sass/main.scss';
+
+.topbar {
+  align-items: center;
+  background: main.$twitch-darkgrey;
+  border-bottom: 2px solid main.$twitch-grey;
+  display: flex;
+  flex-direction: row;
+  height: 55px;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.menu-toggle {
+  width: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  div {
+    background: main.$twitch-ice;
+    height: 2px;
+    margin: 4px 0;
+    width: 20px;
+  }
+}
+
+.logo-container {
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  height: 100%;
+  width: 160px;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: main.$twitch-ice;
+      cursor: pointer;
+    }
+  }
+
+  div {
+    font-weight: bold;
+    height: auto;
+    margin-left: 20px;
+    width: auto;
+  }
+}

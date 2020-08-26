@@ -8,13 +8,13 @@ function GameCard(props) {
   }
 
   return (
-    <div className='gameCard'>
+    <div className='game-card'>
       <div>
         <Link to={`/game/${props.id}`}>
           <img src={parseBoxArtUrl(props.boxArt)} alt={`${props.name}-box-art`} />
         </Link>
       </div>
-      <Link to={`/game/${props.id}`} className='gameName'>
+      <Link to={`/game/${props.id}`} className='game-name'>
         {props.name}
       </Link>
     </div>

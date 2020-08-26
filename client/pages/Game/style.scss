@@ -1,89 +1,89 @@
-@import '../../variables.scss';
+@use '../../sass/main.scss';
 
-.gameHeader {
-  position: relative;
+.game {
+  width: 100%;
+}
 
-  .headerImage {
-    position: relative;
-    top: -20px;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    max-width: 100vw;
-    width: 100vw;
+.game-header {
+  img {
     height: 30vh;
+    max-width: 100%;
     object-fit: cover;
     opacity: 0.5;
+    position: relative;
+    width: 100%;
     z-index: -10;
   }
 }
 
-.gameSection {
-  width: 90vw;
+.game-section {
   display: flex;
-  margin-top: -160px;
-  margin-bottom: 2em;
-}
+  margin: 0 auto;
+  max-width: 95%;
+  z-index: 1;
 
-.gameCover {
-  flex: 1;
-  min-width: 250px;
-
-  img {
-    width: 100%;
-  }
-}
-
-.gameInfo {
-  flex: 3.5;
-  align-self: stretch;
-  padding: 125px 2em 0 2em;
-
-  h1 {
-    margin-bottom: 0;
-  }
-
-  a {
-    font-size: 14px;
-  }
-}
-
-/* Styles for Smaller Screens */
-@media only screen and (max-width: 800px) {
-  .gameSection {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .gameCover {
-    flex: 1;
+  .game-cover {
+    min-width: 275px;
+    position: relative;
+    top: -150px;
+    width: 275px;
 
     img {
-      width: 200px;
-      display: block;
-      margin: 0 auto;
+      max-width: 100%;
     }
   }
 
-  .gameInfo {
+  .game-info {
+    padding: 0 20px;
+
+    a {
+      font-size: 14px;
+    }
+  }
+}
+
+.streams-section {
+  margin: 25px auto;
+  max-width: 95%;
+
+  .streams-grid {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    justify-content: space-between;
+  }
+}
+
+/* Smaller Screens */
+@media only screen and (max-width: 800px) {
+  .game-section {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .game-cover {
+    margin: 0 auto;
+    max-width: 200px;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 200px;
+    }
+  }
+
+  .game-info {
     flex: 1;
+    margin: 0 auto;
     padding: 0;
 
-    h1 {
+    h1 { 
       text-align: center;
     }
   }
-}
 
-.streamsSection {
-  border-top: 1px solid $twitch-ice;
-}
-
-.streamsGrid {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  justify-content: space-between;
-  grid-gap: 1rem;
+  .streams-section {
+    border-top: 1px solid main.$twitch-ice;
+  }
 }

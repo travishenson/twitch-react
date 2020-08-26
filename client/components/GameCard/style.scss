@@ -1,23 +1,22 @@
-@import '../../variables.scss';
+@use '../../sass/main.scss';
 
-.gameCard {
-  width: 200px;
+.game-card {
   margin-bottom: 35px;
+  max-width: 200px;
+  width: 45vw;
+
+  div:hover {
+    color: main.$twitch-purple;
+  }
 
   img {
-    max-width: 100%;
     border: 1px solid grey;
+    max-width: 100%;
   }
 }
 
-.gameCard:hover {
-  .gameName {
-    color: $twitch-purple
-  }
-}
-
-.gameName {
+.game-name {
+  color: main.$twitch-ice;
   font-weight: bold;
-  color: $twitch-ice;
   text-decoration: none;
 }

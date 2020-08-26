@@ -1,0 +1,14 @@
+@use '../../sass/main.scss';
+
+.sidebar-element {
+  align-items: center;
+  display: flex;
+  height: 40px;
+
+  &:hover {
+    background: main.$twitch-grey;
+    cursor: pointer;
+  }
+
+  p { margin-left: 20px;}
+}

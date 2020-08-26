@@ -1,6 +1,9 @@
-.topGames {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
+.home {
+  padding: 15px;
+}
+
+.top-games {
+  display: flex;
+  flex-flow: row wrap;
   justify-content: space-between;
 }
