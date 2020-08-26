@@ -9,7 +9,8 @@
     "client": "webpack-dev-server --open --mode development",
     "dev": "concurrently --kill-others \"npm run client\" \"npm run server\"",
     "heroku-postbuild": "webpack -p",
-    "server": "nodemon server/index.js"
+    "server": "nodemon server/index.js",
+    "start": "node server/index.js"
   },
   "keywords": [],
   "author": "",
