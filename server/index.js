@@ -13,7 +13,31 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../dist')));
 };
 
-// Twitch API setup and routes
+// API setup and routes
+const igdbGet = async (endpoint) => {
+  const twitchAuthUrl = `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials`;
+
+  const tokenReq = await axios.post(twitchAuthUrl);
+  const accessToken = tokenReq.data.access_token;
+  
+  axios({
+    url: `https://api.igdb.com/v4/${endpoint}`,
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Client-ID': process.env.TWITCH_CLIENT_ID,
+        'Authorization': 'Bearer ' + accessToken
+    },
+    data: "fields age_ratings,aggregated_rating,aggregated_rating_count,alternative_names,artworks,bundles,category,checksum,collection,cover,created_at,dlcs,expansions,external_games,first_release_date,follows,franchise,franchises,game_engines,game_modes,genres,hypes,involved_companies,keywords,multiplayer_modes,name,parent_game,platforms,player_perspectives,rating,rating_count,release_dates,screenshots,similar_games,slug,standalone_expansions,status,storyline,summary,tags,themes,total_rating,total_rating_count,updated_at,url,version_parent,version_title,videos,websites;"
+  })
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
+
 const helixGet = async (endpoint) => {
   const twitchAuthUrl = `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials`;
 
@@ -33,6 +57,7 @@ const helixGet = async (endpoint) => {
     console.log(err);
   }
 }
+
 
 app.get('/api/twitch/topgames', async (req, res) => {
   try {
@@ -83,27 +108,8 @@ app.get('/api/twitch/tags/:tagid', async (req, res) => {
   try {
     const tagData = await helixGet(`/tags/streams?tag_id=${req.params.tagid}`);
     const tagStreams = await helixGet(`/streams`);
-    let tagGames;
 
-    await axios({
-      url: 'https://api-v3.igdb.com/games/',
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'user-key': process.env.IGDB_API_KEY
-      },
-      data: `fields 
-        genres.*, 
-        name, 
-        slug;
-        where genres = 5;
-        `
-    })
-    .then(response => {
-      tagGames = response.data;
-      return tagGames;
-    })
-    .catch(err => console.log(err))
+    const tagGames = await igdbGet('/games');
 
     res.send({ tagData: tagData, games: tagStreams, test: tagGames });
   } catch (err) {
@@ -112,33 +118,21 @@ app.get('/api/twitch/tags/:tagid', async (req, res) => {
 })
 
 // IGDB API setup and routes
-app.get('/api/igdb/games/:gameslug', (req, res) => {
+app.get('/api/igdb/games/:gameslug', async (req, res) => {
+  const twitchAuthUrl = `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials`;
+
+  const tokenReq = await axios.post(twitchAuthUrl);
+  const accessToken = tokenReq.data.access_token;
+
   axios({
-    url: 'https://api-v3.igdb.com/games',
+    url: `https://api.igdb.com/v4/games`,
     method: 'POST',
     headers: {
-        'Accept': 'application/json',
-        'user-key': process.env.IGDB_API_KEY
+      'Accept': 'application/json',
+      'Client-ID': process.env.TWITCH_CLIENT_ID,
+      'Authorization': 'Bearer ' + accessToken
     },
-    data: `fields 
-      aggregated_rating,
-      aggregated_rating_count,
-      first_release_date,
-      game_modes.*,
-      genres.*,
-      involved_companies.*,
-      name,
-      platforms.*,
-      rating,
-      rating_count,
-      release_dates.*,
-      screenshots.*,
-      summary,
-      themes.*,
-      total_rating,
-      total_rating_count,
-      url; 
-      where slug = "${req.params.gameslug}";`
+    data: `fields age_ratings,aggregated_rating,aggregated_rating_count,alternative_names,artworks,bundles,category,checksum,collection,cover,created_at,dlcs,expansions,external_games,first_release_date,follows,franchise,franchises,game_engines,game_modes,genres.*,hypes,involved_companies,keywords,multiplayer_modes,name,parent_game,platforms.*,player_perspectives,rating,rating_count,release_dates,screenshots.*,similar_games,slug,standalone_expansions,status,storyline,summary,tags,themes.*,total_rating,total_rating_count,updated_at,url,version_parent,version_title,videos,websites; where slug = "${req.params.gameslug}";`
   })
     .then(response => {
       res.send({
@@ -147,7 +141,7 @@ app.get('/api/igdb/games/:gameslug', (req, res) => {
       });
     })
     .catch(err => {
-        console.error(err);
+      console.error(err);
     });
 })
 
